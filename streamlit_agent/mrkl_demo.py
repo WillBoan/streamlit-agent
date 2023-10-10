@@ -14,6 +14,28 @@ from langchain_experimental.sql import SQLDatabaseChain
 from streamlit_agent.callbacks.capturing_callback_handler import playback_callbacks
 from streamlit_agent.clear_results import with_clear_container
 
+
+from langchain.document_loaders import UnstructuredHTMLLoader, TextLoader, DirectoryLoader
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.chat_models import ChatOpenAI
+from langchain.tools import tool
+from langchain.agents import initialize_agent, AgentType
+from langchain.vectorstores import FAISS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 DB_PATH = (Path(__file__).parent / "Chinook.db").absolute()
 
 SAVED_SESSIONS = {
@@ -24,7 +46,7 @@ SAVED_SESSIONS = {
 }
 
 st.set_page_config(
-    page_title="MRKL", page_icon="🦜", layout="wide", initial_sidebar_state="collapsed"
+    page_title="Contend Legal", page_icon="🦜", layout="wide", initial_sidebar_state="collapsed"
 )
 
 "# 🦜🔗 MRKL"

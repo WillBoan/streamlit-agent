@@ -1,0 +1,3 @@
+Here is a list of factors for determining whether a Section 21 eviction is valid:
+- Whether enough notice period was given
+- Whether it is a retaliatory eviction
