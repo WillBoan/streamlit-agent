@@ -22,7 +22,7 @@ st.set_page_config(
 "# Contend Legal"
 
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = "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"
 
 DB_PATH = (Path(__file__).parent / "data").absolute()
 print(DB_PATH)
@@ -51,7 +51,8 @@ agent = initialize_agent(
     model,
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=True,
-    max_iterations=8
+    max_iterations=8,
+    handle_parsing_errors=True
 )
 
 
@@ -81,6 +82,6 @@ def _approve(_input: str) -> bool:
 if prompt := st.chat_input(placeholder="Ask a legal question"):
     st.chat_message("user").write(prompt)
     with st.chat_message("assistant"):
-        st_callback = StreamlitCallbackHandler(st.container())
+        st_callback = StreamlitCallbackHandler(st.container(), collapse_completed_thoughts=False)
         response = agent.run(prompt, callbacks=[st_callback])
         st.write(response)
