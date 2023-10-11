@@ -22,7 +22,7 @@ st.set_page_config(
 "# Contend Legal"
 
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = "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"
 
 DB_PATH = (Path(__file__).parent / "data").absolute()
 print(DB_PATH)
@@ -39,8 +39,14 @@ def search_docs(query: str) -> str:
 @tool("get user input")
 def get_user_input(query: str) -> str:
     """Use this to ask the user a single question about their situation."""
-    # user_input = input()
-    # st.write(query)
+
+    # Display query to user using st.write()
+    # End the current st.chat_message("assistant")
+    # Wait for user's response before resuming the agent
+    # User's response should get added as: st.chat_message("user").write(response)
+    # The agent should get resumed as a new st.chat_message("assistant")
+
+    st.write(query)
     return "2 weeks"
 
 tools = [search_docs, get_user_input]
@@ -82,6 +88,28 @@ def _approve(_input: str) -> bool:
 if prompt := st.chat_input(placeholder="Ask a legal question"):
     st.chat_message("user").write(prompt)
     with st.chat_message("assistant"):
+        # st_callback = StreamlitCallbackHandler(st.container(), collapse_completed_thoughts=False)
+        # response = agent.run(prompt, callbacks=[st_callback])
+        # st.write(response)
+
+        # Trying to run the agent iteratively, so that we can ask the user for input:
         st_callback = StreamlitCallbackHandler(st.container(), collapse_completed_thoughts=False)
-        response = agent.run(prompt, callbacks=[st_callback])
-        st.write(response)
+        for step in agent.iter(prompt, callbacks=[st_callback]):
+            if output := step.get("intermediate_step"):
+                action, value = output[0]
+                user_query = output[0][0].tool_input
+
+                
+
+
+
+                # if action.tool == "get user input":
+                #     _continue = st.chat_input()
+
+                # if action.tool == "GetPrime":
+                #     print(f"Checking whether {value} is prime...")
+                #     assert is_prime(int(value))
+                # Ask user if they want to continue
+                # _continue = input("Should the agent continue (Y/n)?:\n")
+                # if _continue != "Y":
+                #     break
