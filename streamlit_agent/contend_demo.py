@@ -22,7 +22,12 @@ st.set_page_config(
 "# Contend Legal"
 
 
-OPENAI_API_KEY = "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"
+# OPENAI_API_KEY = st.sidebar.text_input("OpenAI API Key", type="password")
+# if not OPENAI_API_KEY:
+#     st.info("Please add your OpenAI API key to continue.")
+#     st.stop()
+
+OPENAI_API_KEY = "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"
 
 DB_PATH = (Path(__file__).parent / "data").absolute()
 print(DB_PATH)
